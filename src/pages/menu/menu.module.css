@@ -1,0 +1,158 @@
+.table-container {
+  margin: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px; /* Curved corners */
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.add-item-button{
+  padding: 5px 30px;
+  height: 30px;
+}
+
+.main-heading {
+  font-size: 20px;
+  font-weight: 500;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.cz-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff; /* White background for the table */
+  border-radius: 8px; /* Curved corners for the table */
+  overflow: hidden; /* Ensure rounded corners are applied */
+}
+
+.cz-table th, .cz-table td {
+  padding: 12px;
+  text-align: left;
+  border: none; /* No border color */
+}
+
+.cz-table th {
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.cz-table td {
+  font-size: 15px;
+}
+
+.cz-table > tbody > tr {
+  border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+    border-top: 1px solid #d9d9d9;
+}
+
+.cz-table tr:hover {
+  background-color: #eaeaea;
+}
+
+.checkbox-header {
+  transform: scale(1.2); /* Makes the checkbox slightly larger */
+  cursor: pointer; /* Pointer cursor for the checkbox */
+}
+
+
+
+
+
+.form-container {
+  margin: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.main-heading {
+  font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.details-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: end;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 25%;
+}
+
+.form-group label {
+  margin-bottom: 8px;
+    color: #6c757d;
+    font-size: 15px;
+}
+
+.form-group select {
+  background: none;
+}
+
+.form-input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #C1DAE3;
+  border-radius: 4px;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #C1DAE3;
+}
+
+.form-input select:hover {
+  background-color: #f0f0f0; /* Light grey background on hover */
+  cursor: pointer;
+}
+
+select.form-input option {
+  padding: 10px;
+}
+
+select.form-input option:hover {
+  background: #6D401B;
+}
+
+/* .form-input select option {
+  outline: none;
+  border: none;
+} */
+
+.submit-button {
+  height: 40px;
+  padding: 0 25px;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.submit-button:hover {
+  background-color: #502d10;
+}
+
+.form-submit-btn{
+  margin-left: auto;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  color: #1e90ff;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 40px;
+  padding: 0;
+}
+

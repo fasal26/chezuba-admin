@@ -1,0 +1,21 @@
+.cz-navbar{
+  width: 190px;
+  background-color: var(--cz-light);
+  /* position: fixed; */
+  left: 0;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+  overflow-y: auto;
+  padding: 25px 25px 0;
+}
+
+.cz-tabs{
+  margin-top: 25px;
+}
+
+.cz-tabs > ul{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
