@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './menu.module.css';
 import { useMenuStore } from './store/menuStore';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 export const CreateMenu = () => {
   const navigate = useNavigate()
+  let [searchParams] = useSearchParams();
+  const id = searchParams.get('id')
 
   const [formData, setFormData] = useState({
     name: '',
@@ -12,8 +14,39 @@ export const CreateMenu = () => {
     price: '',
     size: '',
     type: '',
+    id: ''
   });
   const createMenuAction = useMenuStore(state => state.createMenuAction)
+  const menuDetailsAction = useMenuStore(state => state.menuDetailsAction)
+  const updateMenuAction = useMenuStore(state => state.updateMenuAction)
+
+  console.log(formData,'formData')
+
+  useEffect(() => {
+    const getItemDetails = async () => {
+      try {
+        const response = await menuDetailsAction({ MENU_ID: id })
+        if(response?.data){
+          const { DESCRIPTION,MENU_NAME,PRICE,SIZE,TYPE,MENU_ID } = response?.data
+          setFormData(() => {
+            return {
+              name: MENU_NAME,
+              description: DESCRIPTION,
+              price: PRICE,
+              size: SIZE,
+              type: TYPE,
+              id: MENU_ID
+            }
+          })
+        }
+      } catch (error) {
+        
+      }
+    }
+
+    if(id) getItemDetails()
+  }, [])
+  
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -21,30 +54,55 @@ export const CreateMenu = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    id ? updateMenu() : createMenu()
+  };
+
+  const createMenu = async () => {
     try {
-      e.preventDefault();
       console.log('Form data submitted:', formData);
       const { name: MENU_NAME,description: DESCRIPTION,price: PRICE,size: SIZE,type: TYPE } = formData
       let payload = {
           MENU_NAME,
           DESCRIPTION,
-          PRICE,
+          PRICE: +PRICE,
           SIZE,
           STATUS: true,
           TYPE
       }
       const response = await createMenuAction(payload)
-      if(response?.status === 1000){
+      if(response?.status === 201){
         navigate(-1)
       }
     } catch (error) {
       console.log(error)
     }
-  };
+  }
+
+  const updateMenu = async () => {
+    try {
+      console.log('Form data submitted:', formData);
+      const { name: MENU_NAME,description: DESCRIPTION,price: PRICE,size: SIZE,type: TYPE } = formData
+      let payload: any = {
+        MENU_NAME,
+        DESCRIPTION,
+        PRICE: +PRICE,
+        SIZE,
+        TYPE,
+      }
+      if(formData?.id) payload.MENU_ID = formData?.id
+      const response = await updateMenuAction(payload)
+      if(response?.status === 200){
+        navigate(-1)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div className={styles['form-container']}>
-      <button className={styles['back-button']}>&larr; Back</button>
+      <button className={styles['back-button']} onClick={() => navigate(-1)}>&larr; Back</button>
       <h6 className={styles['main-heading']}>Product Details</h6>
       <form onSubmit={handleSubmit} className={styles['details-form']}>
         <div className={styles['form-group']}>
@@ -97,9 +155,9 @@ export const CreateMenu = () => {
             className={styles['form-input']}
           >
             <option value="">Select Size</option>
-            <option value="small">Small</option>
-            <option value="medium">Medium</option>
-            <option value="large">Large</option>
+            <option value="Small">Small</option>
+            <option value="Medium">Medium</option>
+            <option value="Large">Large</option>
           </select>
         </div>
         
@@ -114,13 +172,13 @@ export const CreateMenu = () => {
             className={styles['form-input']}
           >
             <option value="">Select Type</option>
-            <option value="physical">Food</option>
-            <option value="digital">Drink</option>
+            <option value="Food">Food</option>
+            <option value="Drink">Drink</option>
           </select>
         </div>
 
         <div className={styles['form-submit-btn']}>
-          <button type="submit" className={styles['submit-button']}>Submit</button>
+          <button type="submit" className={styles['submit-button']}>{id ? 'Update' : 'Submit'}</button>
         </div>
       </form>
     </div>
