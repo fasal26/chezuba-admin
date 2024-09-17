@@ -1,5 +1,6 @@
 import { Navbar } from "@widgets/navbar"
 import { AppRoutes } from "./routes"
+import { Socket } from "@socket/Socket"
 
 function App() {
 
@@ -10,6 +11,7 @@ function App() {
         <div className="cz-content">
           <AppRoutes/>
         </div>
+        <Socket/>
       </div>
     </>
   )

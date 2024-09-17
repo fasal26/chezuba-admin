@@ -16,6 +16,8 @@ export default defineConfig({
       "@widgets": path.resolve(__dirname, "./src/widgets"),
       "@shared": path.resolve(__dirname, "./src/shared"),
       "@routes": path.resolve(__dirname, "./src/routes"),
+      "@hooks": path.resolve(__dirname, "./src/hooks"),
+      "@socket": path.resolve(__dirname, "./src/socket"),
     },
   },
 })

@@ -5,7 +5,7 @@ import { IMenuStoreState } from './IMenuStore';
 export const useMenuStore = create<IMenuStoreState>(() => ({
     createMenuAction: async (payload) => {
         try {
-            return await http.post('/', payload);
+            return await http.post(import.meta.env.VITE_MENU_CREATE, payload);
         } catch (error) {
             console.error('Error fetching user profile:', error);
             throw error;
@@ -29,7 +29,7 @@ export const useMenuStore = create<IMenuStoreState>(() => ({
     },
     updateMenuAction: async (payload) => {
         try {
-            return await http.put('/', payload);
+            return await http.put(import.meta.env.VITE_MENU_CREATE, payload);
         } catch (error) {
             console.error('Error fetching user profile:', error);
             throw error;

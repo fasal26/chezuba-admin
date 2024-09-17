@@ -64,6 +64,7 @@ export const Menu = () => {
             <th>Type</th>
             <th>Name</th>
             <th>Size</th>
+            <th>Price</th>
             <th>Status</th>
           </tr>
         </thead>
@@ -74,10 +75,11 @@ export const Menu = () => {
                 onClick={() => nvgtToDtlsPage(menu.MENU_ID)}
                 key={menu?.MENU_ID}
               >
-                <td>{i + 1}</td>
+                <td>{menu?.MENU_ID}</td>
                 <td>{menu.TYPE}</td>
                 <td>{menu.MENU_NAME}</td>
                 <td>{menu.SIZE}</td>
+                <td>₹ {menu.PRICE}</td>
                 <td onClick={(e) => e.stopPropagation()}>
                   <input
                     type="checkbox"

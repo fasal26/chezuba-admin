@@ -1,0 +1,10 @@
+.img-container{
+  position: relative;
+}
+
+.close-icon{
+  position: absolute;
+  left: 124px;
+  font-size: 40px;
+  top: -8px;
+}

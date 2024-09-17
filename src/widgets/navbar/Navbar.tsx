@@ -1,8 +1,8 @@
 import styles from "./navbar.module.css"
 import { router } from '@routes/index';
 
-type urls = '/' | '/menu'
-type names = 'Dashboard' | 'Menu'
+type urls = '/' | '/menu' | '/order'
+type names = 'Dashboard' | 'Menu' | 'Order'
 
 type MenuItem = {
   url: urls,
@@ -14,6 +14,7 @@ export const Navbar = () => {
   const menuItems: MenuItem[] = [
     { url: '/', name: 'Dashboard' },
     { url: '/menu', name: 'Menu' },
+    { url: '/order', name: 'Order' },
   ]
 
   const handleNavigation = (path: urls) => {

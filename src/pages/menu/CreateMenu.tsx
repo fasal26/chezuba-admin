@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './menu.module.css';
 import { useMenuStore } from './store/menuStore';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useFileUpload } from '@hooks/useFileUpload';
 
 export const CreateMenu = () => {
   const navigate = useNavigate()
@@ -14,20 +15,21 @@ export const CreateMenu = () => {
     price: '',
     size: '',
     type: '',
-    id: ''
+    id: '',
+    prepTime: ''
   });
   const createMenuAction = useMenuStore(state => state.createMenuAction)
   const menuDetailsAction = useMenuStore(state => state.menuDetailsAction)
   const updateMenuAction = useMenuStore(state => state.updateMenuAction)
 
-  console.log(formData,'formData')
+  const {ImageView,fetchFiles,file} = useFileUpload()
 
   useEffect(() => {
     const getItemDetails = async () => {
       try {
         const response = await menuDetailsAction({ MENU_ID: id })
         if(response?.data){
-          const { DESCRIPTION,MENU_NAME,PRICE,SIZE,TYPE,MENU_ID } = response?.data
+          const { DESCRIPTION,MENU_NAME,PRICE,SIZE,TYPE,MENU_ID,PREP_TIME } = response?.data
           setFormData(() => {
             return {
               name: MENU_NAME,
@@ -35,7 +37,8 @@ export const CreateMenu = () => {
               price: PRICE,
               size: SIZE,
               type: TYPE,
-              id: MENU_ID
+              id: MENU_ID,
+              prepTime: PREP_TIME
             }
           })
         }
@@ -61,15 +64,17 @@ export const CreateMenu = () => {
   const createMenu = async () => {
     try {
       console.log('Form data submitted:', formData);
-      const { name: MENU_NAME,description: DESCRIPTION,price: PRICE,size: SIZE,type: TYPE } = formData
-      let payload = {
+      const { name: MENU_NAME,description: DESCRIPTION,price: PRICE,size: SIZE,type: TYPE,prepTime: PREP_TIME } = formData
+      let payload: any = {
           MENU_NAME,
           DESCRIPTION,
           PRICE: +PRICE,
           SIZE,
           STATUS: true,
-          TYPE
+          TYPE,
+          PREP_TIME: +PREP_TIME,
       }
+      if(file) payload.IMAGE = file
       const response = await createMenuAction(payload)
       if(response?.status === 201){
         navigate(-1)
@@ -82,14 +87,16 @@ export const CreateMenu = () => {
   const updateMenu = async () => {
     try {
       console.log('Form data submitted:', formData);
-      const { name: MENU_NAME,description: DESCRIPTION,price: PRICE,size: SIZE,type: TYPE } = formData
+      const { name: MENU_NAME,description: DESCRIPTION,price: PRICE,size: SIZE,type: TYPE,prepTime: PREP_TIME } = formData
       let payload: any = {
         MENU_NAME,
         DESCRIPTION,
         PRICE: +PRICE,
         SIZE,
         TYPE,
+        PREP_TIME: +PREP_TIME
       }
+      if(file) payload.IMAGE = file
       if(formData?.id) payload.MENU_ID = formData?.id
       const response = await updateMenuAction(payload)
       if(response?.status === 200){
@@ -145,6 +152,19 @@ export const CreateMenu = () => {
         </div>
 
         <div className={styles['form-group']}>
+          <label htmlFor="price">Preparation time (mins)</label>
+          <input 
+            type="number" 
+            id="price" 
+            name="prepTime" 
+            value={formData.prepTime} 
+            onChange={handleInputChange} 
+            required 
+            className={styles['form-input']}
+          />
+        </div>
+
+        <div className={styles['form-group']}>
           <label htmlFor="size">Size</label>
           <select 
             id="size" 
@@ -175,6 +195,11 @@ export const CreateMenu = () => {
             <option value="Food">Food</option>
             <option value="Drink">Drink</option>
           </select>
+        </div>
+
+        <div className={`${styles['form-group']} ${styles['img']}`}>
+          <p onClick={() => fetchFiles()}>Add Attachment</p>
+          <ImageView/>
         </div>
 
         <div className={styles['form-submit-btn']}>

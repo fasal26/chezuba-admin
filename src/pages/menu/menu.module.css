@@ -91,6 +91,15 @@
   flex-basis: 25%;
 }
 
+.img {
+  gap: 15px;
+}
+
+.img img{
+  width: 150px;
+  height: 150px;
+}
+
 .form-group label {
   margin-bottom: 8px;
     color: #6c757d;
@@ -99,6 +108,10 @@
 
 .form-group select {
   background: none;
+}
+
+.form-group p {
+  color: #1e90ff;
 }
 
 .form-input {

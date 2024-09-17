@@ -1,5 +1,7 @@
+import { OrderList } from "@pages/order"
+
 export const Dashboard = () => {
   return (
-    <div>Dashboard</div>
+    <OrderList/>
   )
 }
