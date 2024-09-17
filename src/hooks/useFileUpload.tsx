@@ -9,18 +9,22 @@ export const useFileUpload = () => {
     if (inpRef.current) inpRef.current.click();
   };
 
-  const handleImageChange = (e: any) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader: any = new FileReader();
-      reader.onloadend = () => {
-        setFile(reader.result);
-      };
-      reader.readAsDataURL(file);
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if(e.target.files && e.target.files?.length){
+      let file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setFile(reader.result as string);
+        };
+        reader.readAsDataURL(file);
+      }
     }
   };
 
-  const ImageView = () => {
+  const ImageView = ({ file }: { file?: string }) => {
+    if(file) setFile(file)
+
     return (
       <>
         <input

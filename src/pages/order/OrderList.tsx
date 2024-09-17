@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import styles from "./order.module.css";
 import { useOrderStore } from "./store/orderStore";
+import { IOrder } from "./store/IOrderStore";
 
 export const OrderList = () => {
   const orderListAction = useOrderStore((state) => state.orderListAction);
@@ -22,7 +23,7 @@ export const OrderList = () => {
     }
   };
 
-  const handleAction = async (order: any) => {
+  const handleAction = async (order: IOrder) => {
     try {
       const response =
         order.STATUS == "Pending"
@@ -53,7 +54,7 @@ export const OrderList = () => {
           </tr>
         </thead>
         <tbody>
-          {orderList.map((ordr: any, i: number) => {
+          {orderList.map((ordr,i) => {
             return (
               <tr
                 key={ordr?.ORDER_ID}

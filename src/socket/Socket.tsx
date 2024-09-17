@@ -1,29 +1,34 @@
+import { IOrder } from "@pages/order/store/IOrderStore";
 import { useOrderStore } from "@pages/order/store/orderStore";
 import { useEffect, useRef } from "react"
-import io from "socket.io-client";
+import io from 'socket.io-client';
 
 export const Socket = () => {
-  const socket = useRef<any>(null)
+  const socket = useRef<typeof io | null>(null)
   const updateOrderItems = useOrderStore(state => state.updateOrderItems)
 
   useEffect(() => {
     if(!socket.current){
-      console.log('init')
-      socket.current = io("http://localhost:5005", {
+      socket.current = io(import.meta.env.VITE_SOCKET, {
         transports: ["websocket"],
       });
       socket.current.on("connect", socketConnect);
+      socket.current.on("disconnect", socketDisconnect);
     }
   }, [])
   
   const socketConnect = () => {
-    console.log('connected')
+    console.log('socket connected...')
     if(socket.current && socket.current.id) {
       socket.current.on("ORDER_PLACED", onOrderPlace)
     }
   }
 
-  const onOrderPlace = (payload: any) => {
+  const socketDisconnect = () => {
+    console.log('socket disconnected...')
+  }
+
+  const onOrderPlace = (payload: IOrder) => {
     updateOrderItems(payload)
   }
 

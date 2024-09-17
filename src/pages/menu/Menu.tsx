@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "./menu.module.css";
 import { useNavigate } from "react-router-dom";
 import { useMenuStore } from "./store/menuStore";
+import { IMenuItem } from "./store/IMenuStore";
 
 export const Menu = () => {
   const navigate = useNavigate();
@@ -10,7 +11,7 @@ export const Menu = () => {
     (state) => state.updateMenuStatusAction
   );
 
-  const [menuList, setMenuList] = useState<any>([]);
+  const [menuList, setMenuList] = useState<IMenuItem[] | never[]>([]);
 
   useEffect(() => {
     getMenuList();
@@ -21,7 +22,7 @@ export const Menu = () => {
       const response = await menuListAction();
       console.log(response);
       if (response?.status == 200) {
-        setMenuList(response?.data);
+        if(response?.data) setMenuList(response?.data);
       }
     } catch (error) {
       console.log(error);
@@ -69,7 +70,7 @@ export const Menu = () => {
           </tr>
         </thead>
         <tbody>
-          {menuList.map((menu: any, i: number) => {
+          {menuList.map((menu: IMenuItem) => {
             return (
               <tr
                 onClick={() => nvgtToDtlsPage(menu.MENU_ID)}
