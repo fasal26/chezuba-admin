@@ -1,4 +1,4 @@
-import { IOrder } from "@pages/order/store/IOrderStore";
+import { ISocketPayload } from "@pages/order/store/IOrderStore";
 import { useOrderStore } from "@pages/order/store/orderStore";
 import { useEffect, useRef } from "react"
 import io from 'socket.io-client';
@@ -28,7 +28,7 @@ export const Socket = () => {
     console.log('socket disconnected...')
   }
 
-  const onOrderPlace = (payload: IOrder) => {
+  const onOrderPlace = (payload: ISocketPayload) => {
     updateOrderItems(payload)
   }
 

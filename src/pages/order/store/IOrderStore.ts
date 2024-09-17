@@ -3,7 +3,7 @@ import { IResponse } from "@shared/types"
 export interface IOrderStoreState {
   orderList: IOrder[]
   orderListAction: () => Promise<IResponse<IOrder[]>>,
-  updateOrderItems: (payload: IOrder) => void,
+  updateOrderItems: (payload: ISocketPayload) => void,
   startOrderAction: (payload: IOrderStatusPayload) => Promise<IResponse<{}>>,
   completeOrderAction: (payload: IOrderStatusPayload) => Promise<IResponse<{}>>
 }
@@ -24,4 +24,8 @@ export interface IOrderItem {
 }
 
 export interface IOrderStatusPayload extends Pick<IOrder, 'ORDER_ID'> {
+}
+
+export interface ISocketPayload {
+  payload: IOrder
 }

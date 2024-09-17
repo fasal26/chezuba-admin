@@ -32,9 +32,9 @@ export const useOrderStore = create<IOrderStoreState>((set,get) => ({
       throw error;
     }
   },
-  updateOrderItems: (payload) => {
+  updateOrderItems: (response) => {
     let orders = [...get().orderList]
-    orders.push(payload)
+    orders.push(response.payload)
     set({ orderList: orders })
   }
 }));
